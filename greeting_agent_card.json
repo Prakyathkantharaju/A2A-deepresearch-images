@@ -1,0 +1,12 @@
+{
+    "a2a_version": "0.1.0",
+    "id": "urn:agent:local.gemini-greeting-agent",
+    "name": "Gemini Greeting Agent",
+    "description": "A specialized agent that uses Gemini to generate creative text and messages.",
+    "endpoint": "http://127.0.0.1:8001",
+    "capabilities": [
+        {
+            "type": "text/plain"
+        }
+    ]
+}

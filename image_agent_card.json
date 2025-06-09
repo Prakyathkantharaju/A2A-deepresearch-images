@@ -1,0 +1,12 @@
+{
+    "a2a_version": "0.1.0",
+    "id": "urn:agent:local.gemini-image-agent",
+    "name": "Gemini Image Agent",
+    "description": "A specialized agent that uses Gemini to generate an image from a text prompt.",
+    "endpoint": "http://127.0.0.1:8003",
+    "capabilities": [
+        {
+            "type": "text/plain"
+        }
+    ]
+}
