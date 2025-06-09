@@ -1,12 +1,33 @@
 {
     "a2a_version": "0.1.0",
-    "id": "urn:agent:local.gemini-greeting-agent",
-    "name": "Gemini Greeting Agent",
-    "description": "A specialized agent that uses Gemini to generate creative text and messages.",
+    "id": "urn:agent:local.gemini-research-agent",
+    "name": "Gemini Research Agent",
+    "description": "A sophisticated agent that combines Gemini's capabilities with advanced web research functionality. Can perform multi-step research with web searches, source citations, and comprehensive analysis for factual questions.",
     "endpoint": "http://127.0.0.1:8001",
     "capabilities": [
         {
-            "type": "text/plain"
+            "type": "text/plain",
+            "description": "Text generation and conversation"
+        },
+        {
+            "type": "web_search",
+            "description": "Real-time web search and research with source citations"
+        },
+        {
+            "type": "research",
+            "description": "Multi-step research with query generation, reflection, and synthesis"
+        },
+        {
+            "type": "factual_qa",
+            "description": "Factual question answering with verified sources"
         }
+    ],
+    "features": [
+        "Real-time web search integration",
+        "Multi-loop research with reflection",
+        "Source citation and verification",
+        "Intelligent query generation",
+        "Comprehensive research synthesis",
+        "Fallback to regular Gemini for simple queries"
     ]
 }
