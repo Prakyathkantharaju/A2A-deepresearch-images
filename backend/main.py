@@ -1,5 +1,6 @@
 import asyncio
 import os
+from contextlib import asynccontextmanager
 
 from python_a2a import A2AClient, Message, TextContent, MessageRole
 from dotenv import load_dotenv
@@ -15,19 +16,18 @@ class Query(BaseModel):
     text: str
 
 
-app = FastAPI()
-
 # Client to communicate with the manager agent
 manager_client = None
 
 
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     """
-    Handles the startup process of the FastAPI application.
-    - Checks for the GOOGLE_API_KEY.
-    - Creates a client to communicate with the manager agent.
+    Handles the lifespan of the FastAPI application.
+    - Startup: Checks for the GOOGLE_API_KEY and creates a client to communicate with the manager agent.
+    - Shutdown: Logs shutdown information.
     """
+    # Startup
     logger.info("Application startup...")
 
     # Check for API key before starting
@@ -41,16 +41,16 @@ async def startup_event():
     logger.info("Manager client created.")
     logger.info("Note: Make sure agent servers are running (use ./start_agents.sh)")
 
+    yield
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    """
-    Handles the shutdown process of the FastAPI application.
-    """
+    # Shutdown
     logger.info("Application shutdown...")
     logger.info(
         "Note: Agent servers are running independently. Use ./stop_agents.sh to stop them."
     )
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/query")
