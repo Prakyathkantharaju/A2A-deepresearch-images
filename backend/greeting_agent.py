@@ -1,29 +1,32 @@
 # greeting_agent.py
 import os
 import asyncio
-import google.generativeai as genai
-from a2a.server import A2AServer, IncomingRequest
-from a2a.message import Message, TextPart
+from google import genai
+from google.genai import types
+from dotenv import load_dotenv
+from python_a2a import A2AServer, Message, TextContent, MessageRole
 
-# The client is configured via GOOGLE_API_KEY in the .env file
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+load_dotenv()
 
 class GreetingAgent(A2AServer):
     def __init__(self):
         super().__init__()
         # Using a powerful text model
-        self.model = genai.GenerativeModel('gemini-1.5-pro-latest')
+        self.client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
         print("[GreetingAgent] Gemini text model initialized.")
 
-    async def handle_message(self, request: IncomingRequest) -> Message:
-        prompt_text = request.message.get_text()
+    async def handle_message(self, message: Message) -> Message:
+        prompt_text = message.content.text
         print(f"[GreetingAgent] Received text prompt: '{prompt_text}'")
         
         try:
-            response = await self.model.generate_content_async(prompt_text)
+            response = await self.client.agenerate_content(
+                model='gemini-1.5-pro-latest',
+                contents=prompt_text
+            )
             greeting_text = response.text
         except Exception as e:
             greeting_text = f"Error generating text: {e}"
 
         print("[GreetingAgent] Responding with generated text.")
-        return Message(parts=[TextPart(text=greeting_text)])
+        return Message(content=TextContent(text=greeting_text), role=MessageRole.AGENT)

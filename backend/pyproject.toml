@@ -4,4 +4,14 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "a2a>=0.44",
+    "a2a-sdk>=0.2.6",
+    "fastapi>=0.115.12",
+    "google-genai>=1.19.0",
+    "loguru>=0.7.3",
+    "pillow>=11.2.1",
+    "python-a2a>=0.5.9",
+    "python-dotenv>=1.1.0",
+    "uvicorn>=0.34.3",
+]
